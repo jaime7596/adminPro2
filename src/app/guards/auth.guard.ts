@@ -15,10 +15,15 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
+      console.log('Estan en el GUARD');
+      
       return this.usuarioService.validarToken()
         .pipe(
           tap( isAuth => {
-            if(! isAuth) {
+            console.log(isAuth);
+            
+            if(!isAuth) {
+              console.log('Salio');
               this.router.navigateByUrl('/login');
             }
           })
