@@ -69,7 +69,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     if (termino.length === 0){
       return this.usuarios = this.usuariosTemp;
     }
-    this.busquedaService.buscar('usuarios', termino).subscribe( resp => {
+    this.busquedaService.buscar('usuarios', termino).subscribe( (resp: Usuario[]) => {
       this.usuarios = resp;
     });
   }
@@ -114,4 +114,5 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.imgSubs.unsubscribe();
   }
+  
 }

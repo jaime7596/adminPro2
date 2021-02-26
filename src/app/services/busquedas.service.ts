@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { CargarUsuario } from '../interfaces/cargar-usuarios.interface';
 import { tap, map, catchError } from 'rxjs/operators';
 import { Usuario } from '../models/usuarios.model';
+import { Hospital } from '../models/hospital.model';
+import { Medico } from '../models/medico.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +33,12 @@ export class BusquedasService {
       )
     );
   }
+  private tranformarHospitales(resultados: any): Hospital[] {
+    return resultados
+  }
+  private tranformarMedicos(resultados: any): Medico[] {
+    return resultados
+  }
 
   buscar(
     tipo: 'usuarios'| 'medicos'| 'hospitales',
@@ -43,8 +51,14 @@ export class BusquedasService {
             case 'usuarios':
               return this.tranformarUsuarios(resp.resultados);
 
+            case 'hospitales':
+              return this.tranformarHospitales(resp.resultados);
+
+            case 'medicos':
+              return this.tranformarMedicos(resp.resultados);
+
             default:
-              break;
+              return[];
           }
         })
       )

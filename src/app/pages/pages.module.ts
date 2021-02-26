@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { ComponentsModule } from '../components/components.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 // Modulos Externos
 import { ChartsModule } from 'ng2-charts';
@@ -21,6 +22,10 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
+import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
+import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
+import { UsuarioComponent } from './mantenimientos/usuario/usuario.component';
+import { MedicoComponent } from './mantenimientos/medico/medico.component';
 
 
 
@@ -36,7 +41,11 @@ import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component'
     PromesasComponent,
     RxjsComponent,
     PerfilComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    HospitalesComponent,
+    MedicosComponent,
+    UsuarioComponent,
+    MedicoComponent
   ],
   imports: [
     CommonModule,
@@ -45,8 +54,7 @@ import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component'
     ReactiveFormsModule,
     SharedModule,
     ComponentsModule,
-    
-
+    PipesModule
   ],
   exports : [
     DashboardComponent,
@@ -54,7 +62,8 @@ import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component'
     Grafica1Component,
     PagesComponent,
     RouterModule,
-    AccountSettingsComponent
+    AccountSettingsComponent,
+    
     
   ]
 })
