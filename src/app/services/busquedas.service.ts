@@ -26,6 +26,8 @@ export class BusquedasService {
     }
   }
 
+
+
   private tranformarUsuarios(resultados: any): Usuario[] {
     return resultados.pipe( 
       map(
@@ -38,6 +40,10 @@ export class BusquedasService {
   }
   private tranformarMedicos(resultados: any): Medico[] {
     return resultados
+  }
+
+  busquedaGlobal(termino: string){ 
+    return this.http.get(`${this.apiKey}/busquedas/todo/${termino}`, this.headers );
   }
 
   buscar(

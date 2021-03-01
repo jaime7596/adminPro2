@@ -6,6 +6,7 @@ import { MedicosService } from '../../../services/medicos.service';
 import { Medico } from '../../../models/medico.model';
 import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-medico',
@@ -45,8 +46,13 @@ export class MedicoComponent implements OnInit {
   }
 
   cargarMedico(id: string){
-    this.medicoService.obtenerMedicoPorId(id).subscribe( resp => {
-      console.log(resp);
+    if(id === 'nuevo'){
+      return
+    }
+    this.medicoService.obtenerMedicoPorId(id).pipe(delay(100)).subscribe( resp => {
+      if (!resp.medico) {
+        this.router.navigateByUrl(`/dashboard/medicos`)
+      }
       const {nombre, hospital: {_id }} = resp.medico;
       this.medicoSeleccionado = resp.medico;
       this.medicoForm.setValue({nombre, hospital: {_id } })
@@ -56,15 +62,33 @@ export class MedicoComponent implements OnInit {
 
 
   guardarMedico(){
-    console.log(this.medicoForm.value);
-    this.medicoService.crearMedico(this.medicoForm.value).subscribe((resp: any) => {
-      console.log(resp);
-      Swal.fire({
-        title: 'Medico Guardado',
-        icon: 'success',
-      });
-      this.router.navigateByUrl(`/dashboard/medico/${resp.medico._id}`)
-    })
+    if (this.medicoSeleccionado) {
+      // Actualizar
+      const data = {
+        ...this.medicoForm.value,
+        _id: this.medicoSeleccionado._id
+      }
+      this.medicoService.actualizarMedico( data).subscribe( resp => {
+        Swal.fire({
+          title: 'Medico Actualizado',
+          icon: 'success',
+        });
+      })
+
+
+
+    } else {
+      // Crear
+      console.log(this.medicoForm.value);
+      this.medicoService.crearMedico(this.medicoForm.value).subscribe((resp: any) => {
+        console.log(resp);
+        Swal.fire({
+          title: 'Medico Guardado',
+          icon: 'success',
+        });
+        this.router.navigateByUrl(`/dashboard/medico/${resp.medico._id}`)
+      })
+    }
   }
 
   cargarHospitales(){

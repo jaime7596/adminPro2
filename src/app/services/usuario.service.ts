@@ -56,6 +56,11 @@ export class UsuarioService {
     });
   }
 
+  guardarLocalStorage(token: string, menu: any) {
+    localStorage.setItem('token', token);
+    // localStorage.setItem('menu', JSON.stringify(menu));
+  }
+
   logout() {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');
@@ -86,7 +91,9 @@ export class UsuarioService {
   crearUsuario(formData: RegisterForm){
     return this.http.post(`${this.apiKey}/usuarios`, formData)
                 .pipe(
-                  tap((resp: any) => localStorage.setItem('token', resp.token))
+                  tap((resp: any) => {
+                    localStorage.setItem('token', resp.token);
+                  })
                 );
   }
 
@@ -105,7 +112,13 @@ export class UsuarioService {
   login(formData: LoginForm){
     return this.http.post(`${this.apiKey}/login`, formData)
                 .pipe(
-                  tap((resp: any) => localStorage.setItem('token', resp.token))
+                  tap((resp: any) => { 
+                    console.log(resp);
+                    // const { email, google, nombre, role, img = '', uid } = resp.usuario;
+                    // this.usuario = new Usuario(nombre, email, '' , img, google, role, uid);
+                     localStorage.setItem('token', resp.token);
+                  })
+
                 );
   }
 
